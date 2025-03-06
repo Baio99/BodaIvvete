@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;600&display=swap');
 
 :root {
     --primary-color: #8B4513;
     --secondary-color: #D2B48C;
+    --accent-color: #E8C39E;
     --text-color: #2C3E50;
+    --background-color: #F9F5EB;
 }
 
 * {
@@ -13,15 +15,16 @@
 }
 
 body {
-    font-family: 'Playfair Display', serif;
-    background-color: #F4F1DE;
+    font-family: 'Cormorant Garamond', serif;
+    background-color: var(--background-color);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    perspective: 1000px;
+    perspective: 1200px;
     position: relative;
+    color: var(--text-color);
 }
 
 .music-player {
@@ -31,10 +34,10 @@ body {
     z-index: 1000;
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50px;
     padding: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .music-controls {
@@ -54,11 +57,13 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .music-btn:hover {
     background-color: #6A3A1B;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(106, 58, 27, 0.3);
 }
 
 #volume-slider {
@@ -72,6 +77,7 @@ body {
     height: 600px;
     position: relative;
     margin: 20px;
+    perspective: 1500px;
 }
 
 .envelope {
@@ -79,17 +85,18 @@ body {
     height: 100%;
     position: absolute;
     transform-style: preserve-3d;
-    transition: transform 1s;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 }
 
-.envelope-front, .envelope-back {
+.envelope-front, .envelope-back, .envelope-content {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Importante para evitar que el contenido se salga */
 }
 
 .envelope-front {
@@ -99,52 +106,141 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    z-index: 2;
 }
 
 .front-content {
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 80%;
+    padding: 20px;
+    /* Ajustar tamaño para evitar que se salga del contenedor */
+    width: 90%;
+    text-align: center;
 }
 
 .front-content h2 {
     font-family: 'Great Vibes', cursive;
     font-size: 2.5rem;
     margin-bottom: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.front-content p {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+}
+
+.click-instruction {
+    margin-top: 40px;
+    animation: pulse 2s infinite;
+    text-align: center;
+}
+
+.click-instruction i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.click-instruction p {
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .envelope-back {
     background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
     transform: rotateY(180deg);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenido decorativo para el lado trasero del sobre */
+.envelope-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/elegant-grid.png');
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.envelope-back::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    z-index: 2;
 }
 
 .envelope-content {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 95%;
+    left: 5%;
+    top: 2.5%;
     backface-visibility: hidden;
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) translateZ(1px); /* Pequeño ajuste para evitar z-fighting */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background: white;
+    overflow-y: auto;
+    z-index: 1;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .invitation-card {
     text-align: center;
-    padding: 40px;
-    max-width: 350px;
+    padding: 40px 30px;
+    max-width: 100%;
+    width: 100%;
 }
 
 .couple-names {
     font-family: 'Great Vibes', cursive;
     color: var(--primary-color);
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
 }
 
 .invite-text {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--text-color);
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.6;
 }
 
 .date-time {
@@ -152,36 +248,199 @@ body {
     flex-direction: column;
     gap: 10px;
     margin-bottom: 30px;
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .day, .hour {
     font-weight: bold;
     color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.location-section {
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-top: 1px solid var(--accent-color);
+    border-bottom: 1px solid var(--accent-color);
+    position: relative;
+    animation: slideIn 1.2s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.location-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    display: inline-block;
+}
+
+.location-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 25%;
+    width: 50%;
+    height: 1px;
+    background-color: var(--accent-color);
+}
+
+.location-section p {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.map-container {
+    margin: 20px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.map-container:hover {
+    transform: scale(1.02);
+}
+
+.map-link {
+    display: inline-block;
+    color: white;
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2);
+}
+
+.map-link:hover {
+    background-color: #6A3A1B;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(139, 69, 19, 0.3);
+}
+
+.map-link i {
+    margin-right: 8px;
+}
+
+.rsvp-section {
+    margin-top: 30px;
+    animation: bounceIn 1.5s ease-out;
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 .rsvp-button {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 12px 24px;
-    font-size: 1rem;
-    border-radius: 5px;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(139, 69, 19, 0.25);
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 1px;
 }
 
 .rsvp-button:hover {
     background-color: #6A3A1B;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(139, 69, 19, 0.35);
+}
+
+/* Decoración floral para la tarjeta */
+.invitation-card::before,
+.invitation-card::after {
+    content: '❦';
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    display: block;
+    margin: 10px auto;
+}
+
+/* Animaciones para cuando se abre el sobre */
+.envelope.opened .envelope-content {
+    animation: contentAppear 1s 0.5s forwards;
+    opacity: 0;
+    transform: rotateY(180deg) translateZ(1px) translateY(20px);
+}
+
+@keyframes contentAppear {
+    to {
+        opacity: 1;
+        transform: rotateY(180deg) translateZ(1px) translateY(0);
+    }
+}
+
+/* Efecto de brillo en el sobre trasero */
+.envelope-shine {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.1) 25%, 
+        rgba(255,255,255,0.3) 50%, 
+        rgba(255,255,255,0.1) 75%, 
+        rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    animation: shine 4s infinite;
+    opacity: 0;
+    z-index: 3;
+    pointer-events: none;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); opacity: 0; }
+    20% { opacity: 0.6; }
+    50% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(100%); opacity: 0; }
+}
+
+/* Patrón decorativo para el sobre */
+.envelope-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 5%, transparent 5%),
+        radial-gradient(circle at 90% 80%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 5%, transparent 5%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 8%, transparent 8%);
+    background-size: 30px 30px, 30px 30px, 50px 50px;
+    z-index: 2;
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 @media screen and (max-width: 480px) {
     .invitation-container {
         max-width: 90%;
-        height: 500px;
+        height: 520px;
     }
 
     .couple-names {
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .front-content h2 {
+        font-size: 2rem;
     }
 
     .music-player {
@@ -196,5 +455,60 @@ body {
 
     #volume-slider {
         width: 80px;
+    }
+    
+    .invitation-card {
+        padding: 25px 15px;
+    }
+    
+    .map-container {
+        height: 150px;
+    }
+    
+    .map-container iframe {
+        height: 150px;
+    }
+    
+    .invite-text {
+        font-size: 1.1rem;
+    }
+    
+    .day, .hour {
+        font-size: 1.1rem;
+    }
+    
+    .location-section p {
+        font-size: 1rem;
+    }
+    
+    .rsvp-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+}
+
+/* Agrega estos estilos al final de tu archivo styles.css */
+.reception-info {
+    margin: 25px 0;
+    padding: 20px 15px;
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    background-color: rgba(232, 195, 158, 0.1);
+    position: relative;
+    animation: fadeIn 1.3s ease-out;
+}
+
+.reception-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var(--primary-color);
+    text-align: center;
+    margin: 0;
+}
+
+@media screen and (max-width: 480px) {
+    .reception-text {
+        font-size: 1.1rem;
     }
 }

@@ -12,12 +12,12 @@
 <body>
     <div class="music-player">
         <audio id="background-music" loop>
-            <source src="assets/wedding-music.mp3" type="audio/mpeg">
+            <source src="https://cdn.pixabay.com/audio/2023/08/25/audio_6ead1c03ea.mp3" type="audio/mpeg">
             Tu navegador no soporta audio HTML5.
         </audio>
         <div class="music-controls">
             <button id="play-pause-btn" class="music-btn">
-                <i class="fas fa-play"></i>
+                <i class="fas fa-pause"></i>
             </button>
             <div class="volume-container">
                 <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.3">
@@ -31,22 +31,61 @@
                 <div class="front-content">
                     <h2>Ivvette & Jean Carlos</h2>
                     <p>Nuestra Boda</p>
+                    <div class="click-instruction">
+                        <i class="fas fa-hand-pointer"></i>
+                        <p>Click aquí para abrir la invitación</p>
+                    </div>
                 </div>
             </div>
-            <div class="envelope-back"></div>
+            
+            <div class="envelope-back">
+                <!-- Elementos decorativos para el reverso del sobre -->
+                <div class="envelope-pattern"></div>
+                <div class="envelope-shine"></div>
+            </div>
+            
             <div class="envelope-content">
                 <div class="invitation-card">
                     <h1 class="couple-names">Ivvette & Jean Carlos</h1>
                     <div class="wedding-details">
-                        <p class="invite-text">Nos complace invitarte a nuestra boda</p>
+                        <p class="invite-text">El destino nos unió, el amor nos hizo inseparables y hallamos la fuerza para soñar juntos. Hoy, con el corazón abierto y la mirada llena de ilusión, invitamos a nuestros seres queridos a presenciar el comienzo de una historia tejida de promesas eternas y abrazos sinceros, acompáñennos en el día en que nuestros corazones se convierten en uno solo</p>
                         <div class="date-time">
                             <span class="day">Viernes, 7 de Marzo</span>
-                            <span class="hour">8:00 AM</span>
+                            <span class="hour">7:50 AM</span>
                         </div>
                     </div>
-                    <div class="rsvp-section">
-                        <button class="rsvp-button">Confirmar Asistencia</button>
+                    
+                    <div class="location-section">
+                        <h3>Ubicación</h3>
+                        <p>Plataforma gubernamental del sur</p>
+                        <p>Sala de matrimonios</p>
+                        <p>PF43+VPF, Av. Amaru Ñan, Quito 170146</p>
+                        
+                        <div class="map-container">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.4232380102252!2d-78.54722047840983!3d-0.2915250207846009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwMTcnMjkuNSJTIDc4wrAzMic0NS43Ilc!5e0!3m2!1ses!2sec!4v1709707289193!5m2!1ses!2sec" 
+                                width="100%" 
+                                height="200" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        
+                        <a href="https://maps.google.com/?q=-0.291525020784601,-78.54603312949541" class="map-link" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i> Abrir en Google Maps
+                        </a>
                     </div>
+                    
+                    <!-- Reemplaza la sección rsvp-section en tu index.html con esto: -->
+<div class="reception-info">
+    <p class="reception-text">Posterior, con mucha alegría, les invitamos a continuar la celebración en la casa de los padres de la novia, ubicada en la Ciudadela Ibarra. Será un honor compartir este momento tan significativo con ustedes.</p>
+</div>
+
+<div class="rsvp-section">
+    <button class="rsvp-button">Confirmar Asistencia</button>
+</div>
                 </div>
             </div>
         </div>
