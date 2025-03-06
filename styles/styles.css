@@ -236,11 +236,19 @@ body {
 }
 
 .invite-text {
-    font-size: 1.25rem;
+    font-size: 1.0rem;
     color: var(--text-color);
     margin-bottom: 25px;
     font-family: 'Playfair Display', serif;
     line-height: 1.6;
+
+    margin: 25px 0;
+    padding: 20px 15px;
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    background-color: rgba(232, 195, 158, 0.1);
+    position: relative;
+    animation: fadeIn 1.3s ease-out;
 }
 
 .date-time {
